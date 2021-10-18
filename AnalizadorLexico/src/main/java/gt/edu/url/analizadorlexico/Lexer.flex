@@ -8,9 +8,11 @@ import static gt.edu.url.analizadorlexico.Tokens.*;
 mayusculas=[A-Z]
 miniscula =[a-z]
 L=[a-zA-Z_]+
+bara = " "
 D=[0-9]+
 espacio=[ ,\t,\r,\n]+
 punto= "."
+comilla = "\"" 
 
 %{
     public String lexeme;
@@ -61,10 +63,10 @@ raiz {lexeme=yytext(); return RAIZ;}
 {espacio} {/*Ignore*/}
 "//".* {/*Ignore*/} 
 "/*".* {/*Ignore*/}
-"*".* {/*Ignore*/}
 .*"*/" {/*Ignore*/}
 "=" {return IGUAL;}
 "+" {return MAS;}
+{comilla}({L} | {bara})*{comilla} {return TEXTO;}
 "-" {return MENOS;}
 "*" {return MULTIPLICACION;}
 "/" {return DIVICION;}

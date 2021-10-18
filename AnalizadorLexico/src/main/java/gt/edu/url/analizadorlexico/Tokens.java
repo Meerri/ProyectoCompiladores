@@ -28,6 +28,7 @@ public enum Tokens {
     HACER,
     CLASE,
     EXTIENDE,
+    TEXTO,
     PROPIEDADES,
     METODOS,
     PUBLICAS,
