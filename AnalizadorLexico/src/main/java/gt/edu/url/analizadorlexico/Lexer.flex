@@ -7,9 +7,10 @@ import static gt.edu.url.analizadorlexico.Tokens.*;
 %line
 mayusculas=[A-Z]
 miniscula =[a-z]
-L=[a-zA-Z_]+
+L=[a-zA-Z]
+guion = "-" 
 bara = " "
-D=[0-9]+
+D=[0-9]
 espacio=[ ,\t,\r,\n]+
 punto= "."
 comilla = "\"" 
@@ -19,10 +20,15 @@ comilla = "\""
 %}
 
 %%
+{espacio} {/*Ignore*/}
+"//".* {/*Ignore*/} 
+"/*".* {/*Ignore*/}
+.*"*/" {/*Ignore*/}
 verdadero {lexeme=yytext(); return VERDADERO;}
 falso {lexeme=yytext(); return FALSO;}
 nulo {lexeme=yytext(); return NULO;}
 entero {lexeme=yytext(); return ENTERO;}
+real  {lexeme=yytext(); return REAL;}
 boleano {lexeme=yytext(); return BOLEANO;}
 cadena {lexeme=yytext(); return CADENA;}
 escribir {lexeme=yytext(); return ESCRIBIR;}
@@ -60,13 +66,9 @@ coseno {lexeme=yytext(); return COSENO;}
 tangente {lexeme=yytext(); return TANGENTE;}
 logaritmo {lexeme=yytext(); return LOG;}
 raiz {lexeme=yytext(); return RAIZ;}
-{espacio} {/*Ignore*/}
-"//".* {/*Ignore*/} 
-"/*".* {/*Ignore*/}
-.*"*/" {/*Ignore*/}
 "=" {return IGUAL;}
 "+" {return MAS;}
-{comilla}({L} | {bara})*{comilla} {return TEXTO;}
+{comilla}({L} | {bara}|.)*{comilla} {return TEXTO;}
 "-" {return MENOS;}
 "*" {return MULTIPLICACION;}
 "/" {return DIVICION;}
@@ -88,9 +90,9 @@ raiz {lexeme=yytext(); return RAIZ;}
 "]" {return CORCHETEF;}
 "{" {return LLAVEI;}
 "}" {return LLAVEF;}
-{miniscula}({L}|{D})* {lexeme=yytext(); return IDENTIFICADOR;}
-{mayusculas}({L}|{D})* {lexeme=yytext(); return IDENTIFICADORCLASE;}
-("(-"{D}+")")|{D}+ {lexeme=yytext(); return NUMEROENTERO;}
-("(-"{D}+")")|{D}+{punto}("(-"{D}+")")|{D}+ {lexeme=yytext(); return NUMEROREAL;}
+{miniscula}({L}|{D}|{guion})* {lexeme=yytext(); return IDENTIFICADOR;}
+{mayusculas}({L}|{D}|{guion})* {lexeme=yytext(); return IDENTIFICADORCLASE;}
+{D}{D}*{punto}{D}{D}* {lexeme=yytext(); return NUMEROREAL;}
+{D}{D}* {lexeme=yytext(); return NUMEROENTERO;}
  . {return ERROR;}
 

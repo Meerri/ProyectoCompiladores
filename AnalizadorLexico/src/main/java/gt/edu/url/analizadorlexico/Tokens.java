@@ -14,6 +14,7 @@ public enum Tokens {
     FALSO,
     NULO,
     ENTERO,
+    REAL,
     BOLEANO,
     CADENA,
     ESCRIBIR,
