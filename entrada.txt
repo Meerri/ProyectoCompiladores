@@ -1,0 +1,7 @@
+5,6
+9
+hacer
+a =5 & b
+b = b %4
+mientras b < 10
+5---1
