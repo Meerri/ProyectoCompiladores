@@ -1,0 +1,19 @@
+
+package gt.edu.url.analizadorlexico;
+
+terminal D;
+terminal L;
+terminal COMA;
+
+non terminal S;
+
+S ::= D COMA S
+       {:
+           System.out.println("Encontre D COMA S");
+       :}
+    | D
+        {:
+           System.out.println("Encontre D");
+       :}   
+    ; 
+

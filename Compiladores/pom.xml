@@ -7,15 +7,22 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.vbmacher</groupId>
+            <artifactId>java-cup-runtime</artifactId>
+            <version>11b</version>
+        </dependency> 
+    </dependencies>
      <build>
         <plugins>
             <plugin>
                 <groupId>de.jflex</groupId>
                 <artifactId>jflex-maven-plugin</artifactId>
-                <version>1.8.2</version>
+                <version>1.8.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -29,6 +36,24 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.vbmacher</groupId>
+                <artifactId>cup-maven-plugin</artifactId>
+                <version>11b-20160615-1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal> 
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <className>Sintactico</className>
+                    <symbolsName>Simbolo</symbolsName>
+                    <cupDefinition>src\main\java\gt\edu\url\analizadorlexico\Cup.cup</cupDefinition>
+                    <outputDirectory>src\main\java</outputDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <!-- Build an executable JAR -->
