@@ -21,7 +21,7 @@ Nuestro proyecto utiliza una serie de plugins para funcionar de manera correcta
 
 | Plugin | README |
 | ------ | ------ |
-| Jcup | [http://www2.cs.tum.edu/projects/cup/docs.php][PlDb] |
+| Jcup | [http://www2.cs.tum.edu/projects/cup/docs.php]|
 | JFlex | [https://www.jflex.de/manual.html][PlGh] |
 | Maven-jar | [https://maven.apache.org/plugins/maven-jar-plugin/plugin-info.html][PlGd] |
 
