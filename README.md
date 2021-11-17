@@ -23,7 +23,7 @@ Nuestro proyecto utiliza una serie de plugins para funcionar de manera correcta
 | ------ | ------ |
 | Jcup | [http://www2.cs.tum.edu/projects/cup/docs.php]|
 | JFlex | [https://www.jflex.de/manual.html] |
-| Maven-jar | [https://maven.apache.org/plugins/maven-jar-plugin/plugin-info.html][PlGd] |
+| Maven-jar | [https://maven.apache.org/plugins/maven-jar-plugin/plugin-info.html]|
 
 ## Usage
 Para su uso se debe tener un archivo llamado entrada.txt en la carpeta donde se encuentra el proyecto, esto para poder pasarle una entrada al analizador lexico, cuando este termina su trabajo automaticamente se le envia a Jcup el cual segun la gramatica escrita verifica que todo este de manera correcta para darle una finalizacion al analisis.
