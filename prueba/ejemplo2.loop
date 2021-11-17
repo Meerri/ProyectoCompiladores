@@ -1,0 +1,21 @@
+clase Rectangulo
+  propiedades privadas:
+    entero area
+  propiedades publicas:
+    entero ancho
+    entero largo
+  metodos publicos:
+     entero obtenerArea()
+       devolver ancho*largo
+       
+destructor()
+    eliminar ancho
+
+clase Cuadrado extiende Rectangulo
+  metodos protegidos :
+    entero obtenerArea()
+      devolver ancho*ancho
+
+entero Principal()
+  Rectangulo r = instanciar Rectangulo()
+  escribir r.ancho

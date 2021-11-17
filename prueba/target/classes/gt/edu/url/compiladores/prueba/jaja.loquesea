@@ -1,0 +1,122 @@
+              
+funciones -> dato IDENTIFICADOR PARENTESISI PARENTESISF 
+              | dato IDENTIFICADOR PARENTESISI args PARENTESISF 
+              | dato funciones_especiales PARENTESISI IDENTIFICADOR PARENTESISF 
+              | dato funciones_mate PARENTESISI dato IDENTIFICADOR PARENTESISF
+              | CONSTRUCTOR PARENTESISI dato IDENTIFICADOR PARENTESISF 
+              | CONSTRUCTOR PARENTESISI PARENTESISF 
+              | DESTRUCTOR PARENTESISI dato IDENTIFICADOR PARENTESISF 
+              | DESTRUCTOR PARENTESISI PARENTESISF 
+                        
+funciones_especiales ->  CADENAAENTERO  
+                        | CADENAAREAL  
+                        |CADENAABOOL 
+
+                  
+funciones_mate -> SENO 
+                  | TAN 
+                  | COSENO 
+                  | LOG 
+                  | RAIZ;
+
+        
+dato -> ENTERO 
+        | CADENA  
+        | REAL
+        | BOOLEANO 
+        | NULO; 
+
+        
+args -> dato IDENTIFICADOR | dato IDENTIFICADOR COMA args; 
+
+
+
+bloques -> bloque1 | bloque2 | bloque3;
+            
+bloque1 -> declarar_var 
+            | declarar_var equal0 
+            | asignar 
+            | io;
+
+                
+declarar_var -> dato IDENTIFICADOR | dato IDENTIFICADOR declarar_var2
+
+               
+declarar_var2 -> COMA IDENTIFICADOR   | COMA IDENTIFICADOR declarar_var2;
+
+
+equal0 -> IGUAL equal1;
+
+equal1 -> equal2| operacion
+        
+equal2 -> NUMEROENTERO
+         | NUMEROREAL
+         | TEXTO| VERDADERO
+         | FALSO | call_funcion
+         | call_clase| call_var 
+         | IDENTIFICADOR; 
+
+           
+operacion -> equal2 MAS equal2 
+           | equal2 MENOS equal2
+           | equal2 operadores equal2
+           | MENOS equal2| operacion_logica 
+           | INCREMENTO equal2 
+           | equal2 DECREMENTO 
+
+
+operadores -> MULTIPLICACION | DIVISION | DIVISIONMODULAR;
+
+operacion_logica -> equal2 OR equal2; 
+call_clase - IDENTIFICADOR PUNTO call_funcion;
+call_var -> IDENTIFICADOR PUNTO IDENTIFICADOR;
+call_funcion - IDENTIFICADOR parametros;
+
+mandar - equal2| equal2 COMA mandar;
+parametros -> PARENTESISI PARENTESISF| PARENTESISI mandar PARENTESISF;
+
+
+asignar -> IDENTIFICADOR PUNTO IDENTIFICADOR equal0 | IDENTIFICADOR equal0;
+      | leer1 
+io -> escribir1 
+
+escribir1 - ESCRIBIR info; 
+leer1 -> LEER IDENTIFICADOR;
+info - equal2 
+        | equal2 COMA info
+
+            
+bloque2 -> estructura_si 
+            | estructura_sino
+            | estructura_hacer 
+            | estructura_desde 
+
+estructura_sino - SINO;
+estructura_si -> SI condicion ENTONCES;
+condicion - equal1 MENORQUE equal1 
+              | equal1 MAYORQUE equal1
+              | equal1 COMPARACION equal1
+              | equal1 DIFERENTE equal1 
+              | operacion
+              | call_clase 
+
+                 
+estructura_desde ->  DESDE aux MIENTRAS condicion DECREMENTAR equal2 HACER
+                     |DESDE aux MIENTRAS condicion INCREMENTAR equal2 
+                     | MIENTRAS condicion
+estructura_hacer -> HACER 
+       | dato IDENTIFICADOR
+aux -> IDENTIFICADOR 
+       | IDENTIFICADOR equal0
+       | dato IDENTIFICADOR equal0
+
+
+           
+bloque3 -> instanciar1 
+           | call_clase 
+           | DEVOLVER equal1 
+           | ELIMINAR IDENTIFICADOR 
+
+
+instanciar1 -> IDENTIFICADORCLASE IDENTIFICADOR IGUAL INSTANCIAR IDENTIFICADORCLASE parametros;
+principalF -> dato PRINCIPAL PARENTESISI PARENTESISF 

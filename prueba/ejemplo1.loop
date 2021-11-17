@@ -1,0 +1,34 @@
+incluir "C:\Users\aleja\Documents\NetBeansProjects\Compiladores2021\prueba\ejemplo2.loop" 
+clase Impar 
+  propiedades publicas :
+    cadena hola
+  metodos publicos :
+    entero esImpar ( entero numero )
+        si numero % 2 entonces
+           devolver 1
+        sino
+           devolver 0
+
+clase HolaMundo
+  propiedades privadas:
+    entero a
+    cadena nombre
+  metodos publicos:
+    constructor()
+    entero ab = 0
+    nombre = " "
+
+  entero inicio()
+     escribir "escriba su nombre"
+     leer nombre
+    
+    si i.esImpar(a) entonces
+       escribir "el numero que eligio es impar"
+    sino
+       escribir "El numero que eligio es par"
+    devolver 0
+
+entero Principal()
+    HolaMundo hola = instanciar HolaMundo()
+    hola.inicio()
+    devolver 0

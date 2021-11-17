@@ -1,0 +1,14 @@
+incluir "ejemplo1.loop"
+
+clase Declarar
+  propiedades publicas:
+  cadena a = "123"
+
+entero cadenaAEntero (a)
+
+clase Iteracion
+   desde entero i = 0 mientras i < 5 incrementar 2 hacer
+     escribir i
+
+entero Principal()
+   devolver 0

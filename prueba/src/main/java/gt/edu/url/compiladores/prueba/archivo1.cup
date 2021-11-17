@@ -1,0 +1,134 @@
+
+package gt.edu.url.compiladores.prueba;
+
+import java_cup.runtime.Symbol;
+parser code {:
+
+	
+	// Connect this parser to a scanner!
+        public void syntax_error(Symbol cur_token) {
+            System.out.println("Error "+cur_token);
+        }
+
+	
+:};
+
+terminal NUMEROENTERO, ENTERO, VERDADERO, FALSO, NULO, REAL, BOOLEANO, CADENA, INCREMENTAR, DECREMENTAR, IDENTIFICADOR, IDENTIFICADORCLASE, NUMEROREAL,  INCREMENTO, DECREMENTO, TEXTO, PRIVADAS, PRIVADOS;
+terminal HACER, PROTEGIDAS, PROTEGIDOS;
+terminal CLASE, COMA, PUNTO, SINO;
+
+terminal INSTANCIAR, ELIMINAR, CONSTRUCTOR, DESTRUCTOR, INCLUIR, PRINCIPAL, ESTATICO, OR, CADENAAENTERO, CADENAAREAL, CADENAABOOL, SENO, COSENO, TAN, LOG, RAIZ, IGUAL, MAS, MENOS, MULTIPLICACION, DIVISION, DIVISIONMODULAR, MENORQUE, MAYORQUE, COMPARACION, DIFERENTE, DOSPUNTOS, PARENTESISI, PARENTESISF, ESCRIBIR, LEER;
+terminal SI, ENTONCES, DEVOLVER, DESDE, MIENTRAS, EXTIENDE, PROPIEDADES, METODOS, PUBLICAS, PUBLICOS;
+
+non terminal Object S;
+non terminal Object P;
+/*principales*/
+non terminal bibliotecas, clases, funciones, principalF;
+
+/*para clases*/
+non terminal props, metodos1, contenidoClase, parametros;
+/*Para funciones*/
+non terminal dato, args, funciones_especiales, funciones_mate;
+/*general*/
+non terminal bloques, bloque1, bloque2, bloque3;
+non terminal declarar_var, declarar_var2, equal0, equal1, equal2, asignar, mandar;  
+non terminal operacion, operadores, operacion_logica, call_clase, call_funcion, call_var; 
+non terminal io, escribir1, leer1, info, instanciar1;
+non terminal condicion, estructura_si, estructura_sino, estructura_desde, estructura_hacer, aux;
+
+start with S;
+
+S ::= P {: System.out.println("----SINTAXIS CORRECTA----");  :};
+P ::= bibliotecas P | clases P | funciones P | bloques P |bloques | principalF P ;
+/* para variables*/
+
+bibliotecas ::= INCLUIR TEXTO {: System.out.println("Sintactico: Encontre BIBLIOTECA ");:} ;  
+
+/* declarar_clase ::= CLASE IDENTIFICADORCLASE | CLASE IDENTIFICADORCLASE EXTIENDE IDENTIFICADORCLASE {: System.out.println("Sintactico: Encontre DECLARACION CLASE "); :};*/
+
+clases ::=   CLASE IDENTIFICADORCLASE {: System.out.println("Sintactico: Encontre CLASE "); :}
+            | CLASE IDENTIFICADORCLASE EXTIENDE IDENTIFICADORCLASE {: System.out.println("Sintactico: Encontre CLASE "); :}
+            | contenidoClase;
+            
+
+contenidoClase ::= PROPIEDADES props DOSPUNTOS {: System.out.println("Sintactico: Encontre PROPIEDAD ");:}
+                   | METODOS metodos1 DOSPUNTOS {: System.out.println("Sintactico: Encontre METODO ");:};
+
+props ::= PUBLICAS | PRIVADAS | PROTEGIDAS | ESTATICO;
+
+metodos1 ::= PUBLICOS | PRIVADOS | PROTEGIDOS;
+
+/*------------------------------------------------------------------------*/
+/* producciones funciones sueltas*/
+funciones ::= dato IDENTIFICADOR PARENTESISI PARENTESISF {: System.out.println("Sintactico: Encontre FUNCION SIN ARGS "); :}
+              | dato IDENTIFICADOR PARENTESISI args PARENTESISF {: System.out.println("Sintactico: Encontre FUNCION2 CON ARGS");:}
+              | dato funciones_especiales PARENTESISI IDENTIFICADOR PARENTESISF {: System.out.println("Sintactico: Encontre FUNCION ESPECIAL");:}
+              | dato funciones_mate PARENTESISI dato IDENTIFICADOR PARENTESISF{: System.out.println("Sintactico: Encontre FUNCINCION MATEMATICA");:}
+              | CONSTRUCTOR PARENTESISI dato IDENTIFICADOR PARENTESISF {: System.out.println("Sintactico: Encontre CONSTRUCTOS CON PARAMETROS");:}
+              | CONSTRUCTOR PARENTESISI PARENTESISF {: System.out.println("Sintactico: Encontre COSNTRUCTOR");:}
+              | DESTRUCTOR PARENTESISI dato IDENTIFICADOR PARENTESISF {: System.out.println("Sintactico: Encontre DESTRUCTOR");:}
+              | DESTRUCTOR PARENTESISI PARENTESISF {: System.out.println("Sintactico: Encontre DESTRUCTOR");:};
+funciones_especiales ::=  CADENAAENTERO | CADENAAREAL |CADENAABOOL ;
+funciones_mate ::= SENO | COSENO | TAN | LOG | RAIZ;
+
+dato ::= ENTERO | REAL| CADENA | BOOLEANO | NULO; /* se hizo otra porque nulo solo es de funciones*/
+
+args ::= dato IDENTIFICADOR| dato IDENTIFICADOR COMA args; /*COOOOOOOOOOOOMAAAAAAAAAAAAAAAAA*/
+
+/* -----------------------------------------------------------*/
+/* todas las demas opciones de codigo por BLOQUES*/
+bloques ::= bloque1 | bloque2 | bloque3;
+
+bloque1 ::= declarar_var {: System.out.println("Sintactico: Encontre VARIABLE  "); :}
+            | declarar_var equal0 {: System.out.println("Sintactico: Encontre VARIABLE  "); :}
+            | asignar {:System.out.println("Sintactico: Encontre ASIGNACION  ");:} 
+            | io;
+
+declarar_var ::= dato IDENTIFICADOR | dato IDENTIFICADOR declarar_var2;
+declarar_var2 ::= COMA IDENTIFICADOR | COMA IDENTIFICADOR declarar_var2;
+
+equal0 ::= IGUAL equal1;
+equal1 ::= equal2| operacion{: System.out.println("Sintactico: Encontre OPERACION  "); :};
+equal2 ::= NUMEROENTERO| NUMEROREAL| TEXTO| VERDADERO| FALSO | call_funcion| call_clase| call_var | IDENTIFICADOR; 
+
+operacion ::= equal2 MAS equal2 | equal2 MENOS equal2| equal2 operadores equal2| MENOS equal2| operacion_logica | INCREMENTO equal2 | equal2 DECREMENTO {: System.out.println("Sintactico: Encontre OPERACION  "); :}; 
+operadores ::= MULTIPLICACION | DIVISION | DIVISIONMODULAR;
+operacion_logica ::= equal2 OR equal2; /*falta AND*/
+
+call_var ::= IDENTIFICADOR PUNTO IDENTIFICADOR;
+call_clase ::= IDENTIFICADOR PUNTO call_funcion;
+call_funcion ::= IDENTIFICADOR parametros;
+
+parametros ::= PARENTESISI PARENTESISF| PARENTESISI mandar PARENTESISF;
+mandar ::= equal2| equal2 COMA mandar;
+
+asignar ::= IDENTIFICADOR PUNTO IDENTIFICADOR equal0 | IDENTIFICADOR equal0;
+
+io ::= escribir1 {: System.out.println("Sintactico: Encontre ESCRITURA  "); :}
+      | leer1 {: System.out.println("Sintactico: Encontre LECTURA  "); :};
+leer1 ::= LEER IDENTIFICADOR;
+escribir1 ::= ESCRIBIR info; 
+info ::= equal2 | equal2 COMA info;
+
+/* bloque2 estructuras*/
+bloque2 ::= estructura_si {: System.out.println("Sintactico: Encontre ESCTRUCTURA SI  "); :}
+            | estructura_sino {: System.out.println("Sintactico: Encontre ESCRITURA SINO "); :}
+            | estructura_hacer {: System.out.println("Sintactico: Encontre HACER  "); :}
+            | estructura_desde {: System.out.println("Sintactico: Encontre DESDE  "); :};
+
+estructura_si ::= SI condicion ENTONCES;
+estructura_sino ::= SINO;
+condicion ::= equal1 MENORQUE equal1 | equal1 MAYORQUE equal1| equal1 COMPARACION equal1| equal1 DIFERENTE equal1 | operacion| call_clase ;
+estructura_desde ::= DESDE aux MIENTRAS condicion INCREMENTAR equal2 | DESDE aux MIENTRAS condicion DECREMENTAR equal2 HACER;
+estructura_hacer ::= HACER | MIENTRAS condicion;
+aux ::= IDENTIFICADOR | dato IDENTIFICADOR| IDENTIFICADOR equal0| dato IDENTIFICADOR equal0;
+
+/*bloque 3 instancias*/
+bloque3 ::= instanciar1 {: System.out.println("Sintactico: Encontre INSTANCIAR  "); :}
+           | call_clase {: System.out.println("Sintactico: Encontre LLAMAR  "); :}
+           | DEVOLVER equal1 {: System.out.println("Sintactico: Encontre DEVOLVER  "); :}
+           | ELIMINAR IDENTIFICADOR {: System.out.println("Sintactico: Encontre ELIMINAR  "); :};
+
+instanciar1 ::= IDENTIFICADORCLASE IDENTIFICADOR IGUAL INSTANCIAR IDENTIFICADORCLASE parametros;
+/* -----------------------------------------------------------*/
+principalF ::= dato PRINCIPAL PARENTESISI PARENTESISF {: System.out.println("Sintactico: Encontre PRINCIPAL ");:};
